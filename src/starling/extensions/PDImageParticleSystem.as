@@ -11,11 +11,14 @@
 package starling.extensions
 {
     import flash.display3D.Context3DBlendFactor;
+	import starling.display.BlendMode;
+	import starling.extensions.PDParticle;
+	import starling.extensions.Particle;
     
     import starling.textures.Texture;
     import starling.utils.deg2rad;
     
-    public class PDParticleSystem extends ParticleSystem
+    public class PDImageParticleSystem extends ImageParticleSystem
     {
         private const EMITTER_TYPE_GRAVITY:int = 0;
         private const EMITTER_TYPE_RADIAL:int  = 1;
@@ -64,13 +67,12 @@ package starling.extensions
         private var mEndColor:ColorArgb;                    // finishColor
         private var mEndColorVariance:ColorArgb;            // finishColorVariance
         
-        public function PDParticleSystem(config:XML, texture:Texture)
+        public function PDImageParticleSystem(config:XML, texture:Texture)
         {
             parseConfig(config);
             
             var emissionRate:Number = mMaxNumParticles / mLifespan;
-            super(texture, emissionRate, mMaxNumParticles, mMaxNumParticles,
-                  mBlendFactorSource, mBlendFactorDestination);
+            super(texture, emissionRate, mMaxNumParticles, mMaxNumParticles);
         }
         
         protected override function createParticle():Particle
@@ -250,8 +252,10 @@ package starling.extensions
             mStartColorVariance = getColor(config.startColorVariance);
             mEndColor = getColor(config.finishColor);
             mEndColorVariance = getColor(config.finishColorVariance);
-            mBlendFactorSource = getBlendFunc(config.blendFuncSource);
-            mBlendFactorDestination = getBlendFunc(config.blendFuncDestination);
+            //mBlendFactorSource = getBlendFunc(config.blendFuncSource);
+            //mBlendFactorDestination = getBlendFunc(config.blendFuncDestination);
+			
+			//BlendMode.register(getBlendFunc(config.blendFuncSource) + ":" + getBlendFunc(config.blendFuncDestination), getBlendFunc(config.blendFuncSource), getBlendFunc(config.blendFuncDestination));
             
             // compatibility with future Particle Designer versions
             // (might fix some of the uppercase/lowercase typos)
